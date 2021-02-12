@@ -5,6 +5,8 @@
  */
 package ejerciciosnivel1_2021;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Gaming JS
@@ -142,7 +144,137 @@ public class EjerciciosNivel1_2021 {
         return true;         
     }
     
+    /**
+    * este método recibe un string formado por varias palabras
+    * por ejemolo: "Alta Velocidad Española"
+    * y devuelve un array de Strings por ejemplo
+    * {"Alta", "Velocidad", "Española"}
+    * ESTA VERSIÓN SÓLO SE USARÁ EN LAS PRÁCTICAS
+    * NO EN LA VIDA REAL
+    */
+    public String[] divideFrase(String frase){
+        frase = frase + " "; //añade un espacio en blanco al final
+                             //para que funcione el for con todas las palabras
+        String auxiliar = "";
+        //1º averiguo cuántos espacios en blanco tiene la frase
+        int numeroEspaciosEnBlanco = 0;
+        for (int i=0; i< frase.length(); i++){
+            if (frase.charAt(i) == ' '){
+                numeroEspaciosEnBlanco++;
+            }
+        }
+        
+        String[] dividido = new String[numeroEspaciosEnBlanco];
+        int contadorPalabra = 0;
+        for (int i=0; i< frase.length(); i++){
+            if (frase.charAt(i) == ' '){
+                dividido[contadorPalabra] = auxiliar;
+                auxiliar = "";
+                contadorPalabra++;
+            }
+            else{
+                auxiliar = auxiliar + frase.charAt(i);
+            }
+        }
+        
+        return dividido;
+    }
     
+    
+    /**
+     * recibe una frase y devuelve su acrónimo (la primera letra
+     * de cada palabra que forma la frase)
+     * @param frase
+     * @return 
+     */
+    public String acronimo (String frase){
+        frase = frase.toUpperCase();
+        //String [] palabras = divideFrase(frase);
+        String [] palabras = frase.split(" ");
+        String auxiliar = "";
+        for (int i=0; i< palabras.length; i++){
+            if (palabras[i].length() > 0){ //para evitar el problema de las palabras vacías
+                if (!(palabras[i].equals("Y") || palabras[i].equals("DE") || palabras[i].equals("LA") || palabras[i].equals("E") || palabras[i].equals("LAS"))){
+                    auxiliar = auxiliar + palabras[i].charAt(0);
+                }
+            }
+        }
+        return auxiliar;
+    }
+    
+    /**
+     * Recibe dos strings y devuelve true si todas las letras del primero están
+     * en el segundo (sin repetirse), por ejemplo amor y roma
+     * @param palabra1
+     * @param palabra2
+     * @return 
+     */
+    public boolean esAnagrama (String palabra1, String palabra2 ){
+        palabra1 = quitaEspaciosEnBlanco(palabra1);
+        palabra2 = quitaEspaciosEnBlanco(palabra2);
+        palabra1 = quitaAcentos(palabra1);
+        palabra2 = quitaAcentos(palabra2);
+        palabra1 = palabra1.toLowerCase(); //para que todas las letras sean minúsuclas
+        palabra2 = palabra2.toLowerCase();
+        
+        if (palabra1.length() != palabra2.length()){
+            return false; //no tienen el mismo nº de letras, luego no son anagramas
+        }
+        if (palabra1.length() == 0){
+            return false; //no tiene caracteres
+        }
+
+        for (int i=0; i< palabra1.length(); i++){
+            if (palabra2.contains("" + palabra1.charAt(i))){
+                //busco dónde está la letra y luego hago algo con ella
+                palabra2 = palabra2.replaceFirst("" + palabra1.charAt(i), "#");
+            }
+            else{
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 
+     * @param diasIniciales son los días con XX que hay que poner al inicio
+     */
+    
+    public void calendario (int diasIniciales){
+        diasIniciales = diasIniciales % 7;
+        //contador para saber qué día de la semana estoy imprimiendo
+        int contador = 0;
+        //primera parte: imprimir las XX iniciales
+        for (int i=0; i< diasIniciales; i++){
+            System.out.print("XX ");
+            contador++;
+        } 
+        
+        //segunda fase: imprimir los números del 1 al 31
+        for (int i=1; i<=31; i++){
+            if (i > 0 && i < 10){
+                System.out.print("0" + i + " ");
+            }
+            else{
+                System.out.print(i + " ");
+            }
+            contador++;
+            if (contador % 7 == 0){
+                System.out.println("");
+            }
+            
+        }
+        
+        //3º fase: dibujar las XX finales
+        while (contador % 7 != 0){
+            System.out.print("XX ");
+            contador++;
+        }
+        
+    }
+      
     /**
      * @param args the command line arguments
      */
@@ -150,14 +282,24 @@ public class EjerciciosNivel1_2021 {
         EjerciciosNivel1_2021 ejercicio = new EjerciciosNivel1_2021();           
         System.out.println("palindromo: " + ejercicio.esPalindromo("Acaso hubo buhos aca"));
         System.out.println("palindromo: " + ejercicio.esPalindromo("esto no es"));          
-        System.out.println("el máximo es: " + ejercicio.maximo(ejercicio.listaNumeros));
-        
+        System.out.println("el máximo es: " + ejercicio.maximo(ejercicio.listaNumeros));   
         
         System.out.println("la palabra murcielago " + ejercicio.esIsograma("murcielago"));
         System.out.println("la palabra careta " + ejercicio.esIsograma("careta"));
         
+        System.out.println(Arrays.toString (ejercicio.divideFrase("Alta Velocidad Española")));
+        if (ejercicio.esAnagrama("roma", "amor")){
+            System.out.println("Sí que son anagramas");
+        }
+        else{
+            System.out.println("No son anagramas");
+        }
         
-        
+        ejercicio.calendario(3);
+        System.out.println();System.out.println();
+        ejercicio.calendario(4);
+        System.out.println();System.out.println();
+        ejercicio.calendario(0);
     }
     
 }

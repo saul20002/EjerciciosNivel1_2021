@@ -137,6 +137,55 @@ public class EjerciciosNivel1_2021Test {
         assertEquals("CAMION", instance.quitaAcentosV2("CAMIÓN"));
     }
 
+    /**
+     * Test of divideFrase method, of class EjerciciosNivel1_2021.
+     */
+    @Test
+    public void testDivideFrase() {
+        System.out.println("divideFrase");
+        String frase = "";
+        EjerciciosNivel1_2021 instance = new EjerciciosNivel1_2021();
+        String[] expResult = null;
+        String[] result = instance.divideFrase(frase);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of acronimo method, of class EjerciciosNivel1_2021.
+     */
+    @Test
+    public void testAcronimo() {
+        System.out.println("acronimo");
+        EjerciciosNivel1_2021 instance = new EjerciciosNivel1_2021();
+
+        assertEquals("AVE", instance.acronimo("Alta Velocidad Española"));
+        assertEquals("CETS", instance.acronimo("Centro de Estudios Tecnológicos y Sociales"));
+        assertEquals("CETS", instance.acronimo("Centro de Estudios Tecnológicos y Sociales"));
+        assertEquals("UFV", instance.acronimo("Universidad Francisco de Vitoria"));          
+    }
+
+    /**
+     * Test of esAnagrama method, of class EjerciciosNivel1_2021.
+     */
+    @Test
+    public void testEsAnagrama() {
+        System.out.println("esAnagrama");
+
+        EjerciciosNivel1_2021 instance = new EjerciciosNivel1_2021();
+        assertEquals(true, instance.esAnagrama("amor", "roma"));
+        assertEquals(true, instance.esAnagrama("Claudia", "licuada"));
+        assertEquals(false, instance.esAnagrama("", ""));
+        
+        assertEquals(true, instance.esAnagrama("Helios", "hiÉlos"));
+        assertEquals(true, instance.esAnagrama("Nacionalista", "Altisonancia"));
+        assertEquals(false, instance.esAnagrama("kike", "aprobado"));
+
+    }
+
+    
+
    
     
 }
